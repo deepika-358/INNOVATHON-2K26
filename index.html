@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INNOVATHON 2K26 | Mahendra Engineering College</title>
+<meta name="description" content="INNOVATHON 2K26 – Innovation Challenge organized by the Department of Electrical and Electronics Engineering, Mahendra Engineering College. Think. Build. Pitch. Win.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   INNOVATHON 2K26 — Design tokens
+   Base:    #060a14 (void), #0c1424 (panel), #101c33 (panel-alt)
+   Signal:  #2fb8ff (electric blue), #ff9a3c (circuit orange), #ffd44d (spark yellow)
+   Ink:     #f2f6fb (white), #92a3bf (muted)
+   Type:    "Space Grotesk" for display, "Inter" for body/UI
+   ========================================================================== */
+ 
+:root {
+  --void: #060a14;
+  --panel: #0c1424;
+  --panel-alt: #101c33;
+  --panel-line: #16233d;
+  --blue: #2fb8ff;
+  --blue-dim: #1c7fb0;
+  --orange: #ff9a3c;
+  --yellow: #ffd44d;
+  --ink: #f2f6fb;
+  --muted: #92a3bf;
+  --muted-dim: #5c6c88;
+  --danger: #ff5470;
+  --border: rgba(47, 184, 255, 0.22);
+  --border-strong: rgba(47, 184, 255, 0.45);
+  --glow: 0 0 0 1px rgba(47,184,255,0.15), 0 0 40px -12px rgba(47,184,255,0.55);
+  --radius: 14px;
+  --maxw: 1180px;
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+}
+ 
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+ 
+/* Every anchor target gets breathing room above it so the sticky nav
+   never covers the heading it just scrolled to. */
+[id] { scroll-margin-top: 88px; }
+ 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+ 
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+ 
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+ 
+/* Circuit-board ambient background, applied once to body via fixed layer */
+.circuit-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(47,184,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47,184,255,0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 75%);
+}
+ 
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+ 
+section { position: relative; z-index: 1; padding: 92px 0; }
+section + section { border-top: 1px solid var(--panel-line); }
+ 
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--blue);
+  margin-bottom: 14px;
+}
+.eyebrow::before {
+  content: "";
+  width: 18px; height: 2px;
+  background: var(--orange);
+  display: inline-block;
+}
+ 
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  color: var(--ink);
+}
+ 
+.section-title {
+  font-size: clamp(28px, 3.4vw, 42px);
+  max-width: 620px;
+}
+ 
+.section-lead {
+  color: var(--muted);
+  max-width: 640px;
+  font-size: 17px;
+  margin-bottom: 44px;
+}
+ 
+.section-head { margin-bottom: 44px; }
+ 
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  min-height: 48px;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue), #1584c4);
+  color: #041018;
+  box-shadow: 0 0 0 1px rgba(47,184,255,0.4), 0 12px 30px -10px rgba(47,184,255,0.6);
+}
+.btn-primary:hover { box-shadow: 0 0 0 1px rgba(47,184,255,0.6), 0 16px 36px -8px rgba(47,184,255,0.75); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border-strong);
+}
+.btn-ghost:hover { background: rgba(47,184,255,0.08); border-color: var(--blue); }
+.btn-block { width: 100%; }
+ 
+/* Nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(6, 10, 20, 0.82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--panel-line);
+}
+.nav-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-mark {
+  width: 35px; height: 35px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, var(--blue), var(--orange));
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  color: #060a14;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.brand small { display:block; font-family: var(--font-body); font-weight: 400; font-size: 10.5px; color: var(--muted); letter-spacing: 0.03em; }
+ 
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.nav-links a {
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+}
+.nav-links a:hover { color: var(--ink); }
+ 
+.nav-cta { display: none; }
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  width: 42px; height: 42px;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  cursor: pointer;
+  position: relative;
+  z-index: 60;
+}
+.nav-toggle .icon-close { display: none; }
+.nav-toggle.is-open .icon-open { display: none; }
+.nav-toggle.is-open .icon-close { display: block; }
+ 
+@media (min-width: 981px) {
+  .nav-cta { display: inline-flex; }
+}
+ 
+@media (max-width: 980px) {
+  .nav-links {
+    position: fixed;
+    inset: 66px 0 0 0;
+    background: var(--void);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px 24px;
+    gap: 4px;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    overflow-y: auto;
+    border-top: 1px solid var(--panel-line);
+  }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links a {
+    padding: 14px 4px;
+    width: 100%;
+    border-bottom: 1px solid var(--panel-line);
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .nav-links .nav-cta-mobile { display: block; margin-top: 18px; width: 100%; }
+  .nav-toggle { display: inline-flex; }
+}
+ 
+/* Hero */
+.hero {
+  padding: 76px 0 90px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -20%; right: -10%;
+  width: 60%; height: 140%;
+  background: radial-gradient(circle, rgba(47,184,255,0.16), transparent 65%);
+  pointer-events: none;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: -30%; left: -10%;
+  width: 50%; height: 100%;
+  background: radial-gradient(circle, rgba(255,154,60,0.10), transparent 65%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 2; text-align: center; }
+.hero-org {
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+.hero-dept { color: var(--blue); font-size: 14px; margin-bottom: 26px; }
+.hero-presents { color: var(--muted-dim); font-size: 13px; letter-spacing: 0.12em; margin-bottom: 16px; }
+ 
+.hero-title {
+  font-size: clamp(46px, 9vw, 108px);
+  line-height: 0.98;
+  margin: 0 0 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #cfe9ff 55%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.01em;
+}
+ 
+.hero-tagline {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.2vw, 24px);
+  color: var(--orange);
+  margin-bottom: 28px;
+}
+ 
+.hero-sub {
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0 auto 40px;
+  font-size: 16px;
+}
+.hero-sub strong { color: var(--ink); }
+ 
+.hero-facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.fact-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(16, 28, 51, 0.75);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.fact-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 10px var(--blue); flex-shrink:0; }
+.fact-chip.accent .dot { background: var(--orange); box-shadow: 0 0 10px var(--orange); }
+ 
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+ 
+/* Circuit divider svg strip */
+.trace-divider { display: block; width: 100%; height: auto; opacity: 0.55; }
+.trace-line {
+  stroke: var(--blue);
+  stroke-width: 1.4;
+  fill: none;
+  stroke-dasharray: 6 6;
+  animation: dash 6s linear infinite;
+}
+@keyframes dash { to { stroke-dashoffset: -120; } }
+.trace-node { fill: var(--orange); }
+ 
+/* Announcement */
+.announce {
+  padding: 46px 0;
+  background: var(--panel);
+}
+.announce-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 760px) { .announce-grid { grid-template-columns: 1fr; } }
+ 
+.notice-card {
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  border: 1px solid var(--border-strong);
+  background: linear-gradient(160deg, rgba(255,84,112,0.10), rgba(12,20,36,0.9));
+  position: relative;
+}
+.notice-card.amber {
+  background: linear-gradient(160deg, rgba(255,212,77,0.10), rgba(12,20,36,0.9));
+  border-color: rgba(255,212,77,0.4);
+}
+.notice-tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--danger);
+  border: 1px solid rgba(255,84,112,0.5);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 14px;
+}
+.notice-card.amber .notice-tag { color: var(--yellow); border-color: rgba(255,212,77,0.5); }
+.notice-card p { margin: 0; font-size: 17px; color: var(--ink); font-weight: 500; }
+.notice-card p.sub { font-size: 14px; color: var(--muted); font-weight: 400; margin-top: 8px; }
+ 
+/* Cards grid (About) */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; } }
+ 
+.card {
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+  padding: 26px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.card:hover { border-color: var(--border-strong); transform: translateY(-3px); }
+.card-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: rgba(47,184,255,0.1);
+  border: 1px solid var(--border);
+  display: grid; place-items: center;
+  margin-bottom: 16px;
+  color: var(--blue);
+}
+.card h3 { font-size: 17px; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 14.5px; margin: 0; }
+ 
+/* About copy block */
+.about-copy {
+  font-size: 18px;
+  color: var(--ink);
+  max-width: 760px;
+  margin-bottom: 48px;
+  border-left: 2px solid var(--blue);
+  padding-left: 22px;
+}
+ 
+/* Event details table-cards */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--panel-line);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+@media (max-width: 900px) { .detail-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .detail-grid { grid-template-columns: 1fr; } }
+.detail-cell {
+  background: var(--panel);
+  padding: 22px 24px;
+}
+.detail-cell .label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+.detail-cell .value { font-size: 16px; color: var(--ink); font-weight: 500; }
+.detail-cell .value.warn { color: var(--danger); }
+ 
+/* Fee section */
+.fee-wrap {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 860px) { .fee-wrap { grid-template-columns: 1fr; } }
+.fee-display {
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--glow);
+}
+.fee-amount {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 8vw, 84px);
+  color: var(--blue);
+  line-height: 1;
+}
+.fee-amount sup { font-size: 0.35em; vertical-align: super; color: var(--orange); }
+.fee-unit { font-size: 14px; letter-spacing: 0.08em; color: var(--muted); margin-top: 10px; }
+.fee-examples { display: flex; flex-direction: column; gap: 14px; }
+.fee-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: 10px;
+  padding: 16px 22px;
+}
+.fee-row .team { font-weight: 600; }
+.fee-row .sum { color: var(--muted); font-size: 14px; }
+.fee-row .total { font-family: var(--font-display); color: var(--orange); font-size: 20px; }
+.fee-note {
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.fee-note strong { color: var(--ink); }
+ 
+/* Timeline (Schedule) */
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: linear-gradient(var(--blue), var(--orange));
+  opacity: 0.5;
+}
+.timeline-item { position: relative; padding-bottom: 34px; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -30px; top: 4px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--void);
+  border: 2px solid var(--blue);
+  box-shadow: 0 0 12px rgba(47,184,255,0.6);
+}
+.timeline-item.break::before { border-color: var(--orange); box-shadow: 0 0 12px rgba(255,154,60,0.6); }
+.timeline-item.final::before { border-color: var(--yellow); box-shadow: 0 0 12px rgba(255,212,77,0.6); }
+.timeline-time {
+  font-family: var(--font-display);
+  color: var(--blue);
+  font-size: 14px;
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+}
+.timeline-card {
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.timeline-card .ticon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: rgba(47,184,255,0.1);
+  color: var(--blue);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.timeline-card h4 { margin: 0; font-size: 15.5px; font-weight: 600; }
+ 
+/* Flow steps */
+.flow-list { display: flex; flex-direction: column; gap: 14px; }
+.flow-item {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: 12px;
+  padding: 18px 22px;
+}
+@media (max-width: 620px) {
+  .flow-item { grid-template-columns: 44px 1fr; }
+  .flow-item .flow-time { grid-column: 2; }
+}
+.flow-step-num {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--blue-dim);
+  text-align: center;
+}
+.flow-item h4 { margin: 0 0 3px; font-size: 16px; }
+.flow-time { color: var(--muted); font-size: 13.5px; white-space: nowrap; }
+ 
+/* Challenge */
+.challenge-statement {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 30px);
+  color: var(--ink);
+  max-width: 780px;
+  margin-bottom: 40px;
+  line-height: 1.35;
+}
+.challenge-statement em { color: var(--blue); font-style: normal; }
+.chip-list { display: flex; flex-wrap: wrap; gap: 12px; }
+.chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 14px;
+  color: var(--ink);
+  background: rgba(16,28,51,0.6);
+}
+ 
+/* Problem statement */
+.problem-box {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 34px;
+  background: linear-gradient(135deg, rgba(47,184,255,0.08), transparent);
+}
+.problem-box .big { font-family: var(--font-display); font-size: 24px; margin-bottom: 12px; }
+.problem-box p { color: var(--muted); margin: 6px 0; }
+ 
+/* Team requirements */
+.team-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+@media (max-width: 620px) { .team-cards { grid-template-columns: 1fr; } }
+.team-card {
+  border: 1px solid var(--panel-line);
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 26px;
+  text-align: center;
+}
+.team-card .n { font-family: var(--font-display); font-size: 40px; color: var(--blue); }
+.team-card .label { color: var(--muted); font-size: 13px; letter-spacing: 0.04em; margin-bottom: 14px; }
+.team-card .total { font-family: var(--font-display); font-size: 22px; color: var(--orange); }
+ 
+.warning-strip {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  border: 1px solid rgba(255,84,112,0.4);
+  background: rgba(255,84,112,0.07);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+.warning-strip svg { flex-shrink: 0; color: var(--danger); margin-top: 2px; }
+.warning-strip p { margin: 0; color: var(--ink); }
+.warning-strip strong { display:block; color: var(--danger); font-family: var(--font-display); font-size: 14px; margin-bottom: 4px; letter-spacing: 0.02em; }
+ 
+/* Bring section */
+.bring-hero {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  background: linear-gradient(120deg, rgba(255,154,60,0.12), rgba(12,20,36,0.9));
+  border: 1px solid rgba(255,154,60,0.4);
+  border-radius: var(--radius);
+  padding: 30px 34px;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+.bring-icon {
+  width: 64px; height: 64px;
+  border-radius: 14px;
+  background: rgba(255,154,60,0.15);
+  border: 1px solid rgba(255,154,60,0.5);
+  display: grid; place-items: center;
+  color: var(--orange);
+  flex-shrink: 0;
+}
+.bring-hero h3 { margin: 0 0 6px; font-size: 20px; color: var(--orange); }
+.bring-hero p { margin: 0; color: var(--ink); max-width: 560px; }
+ 
+/* Rules accordion */
+.accordion { display: flex; flex-direction: column; gap: 10px; }
+.accordion-item {
+  border: 1px solid var(--panel-line);
+  border-radius: 10px;
+  background: var(--panel);
+  overflow: hidden;
+}
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+.accordion-trigger .num {
+  font-family: var(--font-display);
+  color: var(--blue-dim);
+  font-size: 14px;
+  flex-shrink: 0;
+  width: 30px;
+}
+.accordion-trigger .chev { margin-left: auto; transition: transform 0.2s ease; color: var(--muted); flex-shrink:0; }
+.accordion-item.open .chev { transform: rotate(180deg); }
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+.accordion-panel-inner { padding: 0 20px 18px 66px; color: var(--muted); font-size: 14.5px; }
+ 
+/* Terms */
+.terms-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.terms-list li {
+  display: flex;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 15px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--panel-line);
+}
+.terms-list li::before { content: "▸"; color: var(--blue); flex-shrink: 0; }
+.terms-list li:last-child { border-bottom: none; }
+.agree-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 18px 22px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(47,184,255,0.05);
+}
+.agree-row input { width: 18px; height: 18px; accent-color: var(--blue); }
+.agree-row label { font-size: 14.5px; color: var(--ink); }
+ 
+/* Register */
+.register-panel {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 40px;
+  box-shadow: var(--glow);
+}
+.register-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0 8px;
+}
+.steps-list { counter-reset: step; display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-bottom: 10px; }
+@media (max-width: 700px) { .steps-list { grid-template-columns: 1fr; } }
+.step-item { display: flex; gap: 14px; }
+.step-num {
+  counter-increment: step;
+  font-family: var(--font-display);
+  color: var(--blue);
+  font-size: 15px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.step-item p { margin: 4px 0 0; color: var(--muted); font-size: 14.5px; }
+.step-item strong { display: block; color: var(--ink); font-size: 14.5px; }
+ 
+.reminder-note {
+  font-size: 14px;
+  color: var(--yellow);
+  background: rgba(255,212,77,0.08);
+  border: 1px solid rgba(255,212,77,0.3);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 24px 0 34px;
+}
+ 
+.form-open-row { text-align: center; margin-top: 0; }
+.fallback-note {
+  max-width: 720px;
+  margin: 18px auto 0;
+  font-size: 13.5px;
+  color: var(--muted-dim);
+  text-align: center;
+}
+ 
+.payment-note {
+  margin-top: 30px;
+  font-size: 14px;
+  color: var(--muted);
+  border-top: 1px solid var(--panel-line);
+  padding-top: 20px;
+}
+ 
+/* FAQ */
+/* reuses .accordion */
+ 
+/* Contact */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+@media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-card {
+  border: 1px dashed var(--panel-line);
+  border-radius: var(--radius);
+  padding: 24px;
+  background: var(--panel);
+}
+.contact-card .label { font-family: var(--font-display); font-size: 12px; color: var(--blue); letter-spacing: 0.05em; margin-bottom: 8px; }
+.contact-card .val { color: var(--muted); font-size: 15px; }
+ 
+/* Final CTA */
+.final-cta {
+  text-align: center;
+  padding: 100px 0;
+  position: relative;
+  background: radial-gradient(circle at 50% 0%, rgba(47,184,255,0.12), transparent 60%);
+}
+.final-words {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 6vw, 60px);
+  line-height: 1.05;
+  margin-bottom: 30px;
+}
+.final-words span { display: inline-block; margin: 0 6px; }
+.final-words .think { color: var(--blue); }
+.final-words .build { color: var(--orange); }
+.final-words .pitch { color: var(--yellow); }
+.final-words .win { color: var(--ink); }
+.final-facts { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 36px; }
+ 
+/* Footer */
+footer { background: var(--panel); border-top: 1px solid var(--panel-line); padding: 56px 0 28px; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+@media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; gap: 28px; } }
+.footer-brand p { color: var(--muted); font-size: 14px; max-width: 320px; }
+.footer-tag { color: var(--orange); font-family: var(--font-display); margin-top: 12px; }
+.footer-col h5 { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 16px; }
+.footer-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.footer-col a { color: var(--muted); text-decoration: none; font-size: 14px; }
+.footer-col a:hover { color: var(--blue); }
+.footer-bottom {
+  border-top: 1px solid var(--panel-line);
+  padding-top: 22px;
+  color: var(--muted-dim);
+  font-size: 13px;
+  text-align: center;
+}
+ 
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+ 
+/* Back to top */
+.to-top {
+  position: fixed;
+  right: 20px; bottom: 20px;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 1px solid var(--border-strong);
+  color: var(--blue);
+  display: grid; place-items: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 40;
+}
+.to-top.show { opacity: 1; pointer-events: auto; }
+ 
+::selection { background: rgba(47,184,255,0.35); color: #fff; }
+ 
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+ 
+</style>
+</head>
+<body>
+<div class="circuit-field" aria-hidden="true"></div>
+ 
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="brand">
+      <span class="brand-mark">2K26</span>
+      <span>INNOVATHON 2K26<small>EEE · Mahendra Engineering College</small></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#details">Event Details</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#flow">Event Flow</a></li>
+      <li><a href="#rules">Rules</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#register">Register</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li class="nav-cta-mobile"><a href="#register" class="btn btn-primary btn-block">Register Now</a></li>
+    </ul>
+    <a href="#register" class="btn btn-primary nav-cta">Register Now</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
+      <svg class="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+ 
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="container hero-inner">
+    <p class="hero-org">MAHENDRA ENGINEERING COLLEGE</p>
+    <p class="hero-dept">Department of Electrical and Electronics Engineering</p>
+    <p class="hero-presents">ORGANIZES</p>
+    <h1 class="hero-title">INNOVATHON<br>2K26</h1>
+    <p class="hero-tagline">"Think. Build. Pitch. Win."</p>
+    <p class="hero-sub">A <strong>6-hour innovation challenge</strong> — Idea + Prototype. Identify a real-world problem, build a working prototype, and pitch it to the judges, all in a single day.</p>
+ 
+    <div class="hero-facts">
+      <div class="fact-chip"><span class="dot"></span> October 15, 2026</div>
+      <div class="fact-chip"><span class="dot"></span> 9:30 AM – 3:30 PM</div>
+      <div class="fact-chip accent"><span class="dot"></span> ₹250 / Person</div>
+      <div class="fact-chip accent"><span class="dot"></span> Team Size: 3–4 Members</div>
+    </div>
+ 
+    <div class="hero-actions">
+      <a href="#register" class="btn btn-primary">Register Now</a>
+      <a href="#details" class="btn btn-ghost">Explore Event</a>
+    </div>
+  </div>
+ 
+  <svg class="trace-divider" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+    <path class="trace-line" d="M0 30 H300 L330 10 H520 L550 45 H760 L790 20 H1000 L1030 40 H1200"/>
+    <circle class="trace-node" cx="330" cy="10" r="4"/>
+    <circle class="trace-node" cx="550" cy="45" r="4"/>
+    <circle class="trace-node" cx="790" cy="20" r="4"/>
+    <circle class="trace-node" cx="1030" cy="40" r="4"/>
+  </svg>
+</header>
+ 
+<!-- ANNOUNCEMENT -->
+<section class="announce reveal" aria-label="Important participation notice">
+  <div class="container">
+    <div class="announce-grid">
+      <div class="notice-card">
+        <span class="notice-tag">Important Participation Notice</span>
+        <p>Cross-college participation is not permitted.</p>
+        <p class="sub">Only eligible Students from same College are permitted to participate.</p>
+      </div>
+      <div class="notice-card amber">
+        <span class="notice-tag">Mandatory Equipment</span>
+        <p>Every team must bring their own Junction Box.</p>
+        <p class="sub">This is required for all teams — no exceptions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">About the event</p>
+      <h2 class="section-title">About INNOVATHON 2K26</h2>
+    </div>
+    <p class="about-copy reveal">INNOVATHON 2K26 is an innovation challenge designed to encourage students to identify real-world problems, develop innovative ideas, build a prototype, test their solution, and present their work before a panel of judges.</p>
+ 
+    <div class="grid-4 reveal">
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1v.2h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg></div>
+        <h3>Innovation</h3>
+        <p>Fresh thinking applied to real problems worth solving.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h3>Creativity</h3>
+        <p>Original approaches, not just textbook solutions.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>Problem Solving</h3>
+        <p>Structured thinking under a tight, real event clock.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12h8M8 8h8M8 16h5"/></svg></div>
+        <h3>Prototyping</h3>
+        <p>Turning an idea into something you can hold and show.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><circle cx="19" cy="7" r="3"/></svg></div>
+        <h3>Teamwork</h3>
+        <p>3–4 members working as one unit through the day.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <h3>Practical Implementation</h3>
+        <p>Working prototypes over paper ideas alone.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H8l-4 4V4z"/></svg></div>
+        <h3>Presentation Skills</h3>
+        <p>Pitching your work clearly to a panel of judges.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- EVENT DETAILS -->
+<section id="details">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">The essentials</p>
+      <h2 class="section-title">Event Details</h2>
+    </div>
+ 
+    <div class="detail-grid reveal">
+      <div class="detail-cell"><div class="label">EVENT NAME</div><div class="value">INNOVATHON 2K26</div></div>
+      <div class="detail-cell"><div class="label">DATE</div><div class="value">October 15, 2026</div></div>
+      <div class="detail-cell"><div class="label">TIME</div><div class="value">9:30 AM – 3:30 PM</div></div>
+      <div class="detail-cell"><div class="label">EVENT TYPE</div><div class="value">Idea + Prototype</div></div>
+      <div class="detail-cell"><div class="label">TEAM SIZE</div><div class="value">Minimum 3 · Maximum 4 Members</div></div>
+      <div class="detail-cell"><div class="label">REGISTRATION FEE</div><div class="value">₹250 Per Person</div></div>
+      <div class="detail-cell"><div class="label">PROBLEM STATEMENT</div><div class="value">Common Problem for All Departments</div></div>
+      <div class="detail-cell"><div class="label">PROBLEM SELECTION</div><div class="value">On-Spot Problem Statement Selection</div></div>
+      <div class="detail-cell"><div class="label">PARTICIPATION</div><div class="value">Mahendra Engineering College students and other College Students</div></div>
+      <div class="detail-cell"><div class="label">CROSS-COLLEGE PARTICIPATION</div><div class="value warn">Not Permitted</div></div>
+      <div class="detail-cell"><div class="label">MANDATORY EQUIPMENT</div><div class="value">Each team must bring their own Junction Box</div></div>
+      <div class="detail-cell"><div class="label">EVENT SCHEDULE</div><div class="value">9:30 AM – 3:30 PM, single day</div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- REGISTRATION FEE -->
+<section id="fee">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Fee breakdown</p>
+      <h2 class="section-title">Registration Fee</h2>
+      <p class="section-lead">The registration fee is ₹250 per participant — not per team. Here's what that looks like for a full team.</p>
+    </div>
+ 
+    <div class="fee-wrap reveal">
+      <div class="fee-display">
+        <div class="fee-amount"><sup>₹</sup>250</div>
+        <div class="fee-unit">PER PERSON</div>
+      </div>
+      <div class="fee-examples">
+        <div class="fee-row">
+          <div>
+            <div class="team">3 Member Team</div>
+            <div class="sum">3 × ₹250</div>
+          </div>
+          <div class="total">₹750</div>
+        </div>
+        <div class="fee-row">
+          <div>
+            <div class="team">4 Member Team</div>
+            <div class="sum">4 × ₹250</div>
+          </div>
+          <div class="total">₹1,000</div>
+        </div>
+        <p class="fee-note">Please plan your team's contribution before registering — <strong>₹250 per person, not per team.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- SCHEDULE -->
+<section id="schedule">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">October 15, 2026</p>
+      <h2 class="section-title">Event Schedule</h2>
+      <p class="section-lead">The full day, start to finish. Times are fixed — plan your team's flow around them.</p>
+    </div>
+ 
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-time">09:30 AM – 10:00 AM</div>
+        <div class="timeline-card">
+          <span class="ticon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <h4>Registration &amp; Inauguration</h4>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">10:00 AM – 10:30 AM</div>
+        <div class="timeline-card">
+          <span class="ticon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></span>
+          <h4>Problem Statement &amp; Idea Submission</h4>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">10:30 AM – 01:00 PM</div>
+        <div class="timeline-card">
+          <span class="ticon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 4v5"/></svg></span>
+          <h4>Prototype Development</h4>
+        </div>
+      </div>
+      <div class="timeline-item break">
+        <div class="timeline-time">01:00 PM – 01:30 PM</div>
+        <div class="timeline-card">
+          <span class="ticon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v6a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></span>
+          <h4>Lunch Break</h4>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">01:30 PM – 02:15 PM</div>
+        <div class="timeline-card">
+          <span class="ticon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4 12 14.01l-3-3"/></svg></span>
+          <h4>Final Testing &amp; Preparation</h4>
+        </div>
+      </div>
+      <div class="timeline-item final">
+        <div class="timeline-time">02:15 PM – 02:50 PM</div>
+        <div class="timeline-card">
+          <span class="ticon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H8l-4 4V4z"/></svg></span>
+          <h4>Prototype Demo &amp; Judging</h4>
+        </div>
+      </div>
+      <div class="timeline-item final">
+        <div class="timeline-time">02:50 PM – 03:30 PM</div>
+        <div class="timeline-card">
+          <span class="ticon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+          <h4>Results &amp; Prize Distribution</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- EVENT FLOW -->
+<section id="flow">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Step by step</p>
+      <h2 class="section-title">Event Flow</h2>
+    </div>
+ 
+    <div class="flow-list reveal">
+      <div class="flow-item">
+        <div class="flow-step-num">01</div>
+        <div><h4>Registration &amp; Inauguration</h4></div>
+        <div class="flow-time">9:30 – 10:00 AM</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">02</div>
+        <div><h4>Problem Statement &amp; Idea Submission</h4></div>
+        <div class="flow-time">10:00 – 10:30 AM</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">03</div>
+        <div><h4>Prototype Development</h4></div>
+        <div class="flow-time">10:30 AM – 1:00 PM</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">04</div>
+        <div><h4>Lunch Break</h4></div>
+        <div class="flow-time">1:00 – 1:30 PM</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">05</div>
+        <div><h4>Final Testing &amp; Preparation</h4></div>
+        <div class="flow-time">1:30 – 2:15 PM</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">06</div>
+        <div><h4>Prototype Demo &amp; Judging</h4></div>
+        <div class="flow-time">2:15 – 2:50 PM</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">07</div>
+        <div><h4>Results &amp; Prize Distribution</h4></div>
+        <div class="flow-time">2:50 – 3:30 PM</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- CHALLENGE -->
+<section id="challenge">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">The brief</p>
+      <h2 class="section-title">The Challenge</h2>
+    </div>
+    <p class="challenge-statement reveal">Solve a real-world problem with innovation, and present your <em>idea and prototype</em> within the given event schedule.</p>
+    <div class="chip-list reveal">
+      <span class="chip">Identify the problem</span>
+      <span class="chip">Brainstorm an innovative solution</span>
+      <span class="chip">Develop the prototype</span>
+      <span class="chip">Test the prototype</span>
+      <span class="chip">Prepare the pitch</span>
+      <span class="chip">Demonstrate the prototype</span>
+      <span class="chip">Present before the judges</span>
+    </div>
+  </div>
+</section>
+ 
+<!-- PROBLEM STATEMENT -->
+<section id="problem">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">What you'll solve</p>
+      <h2 class="section-title">Problem Statement</h2>
+    </div>
+    <div class="problem-box reveal">
+      <div class="big">Common Problem for All Departments</div>
+      <p>Problem Statement &amp; Idea Submission will take place from 10:00 AM to 10:30 AM.</p>
+      <p>Participants will receive/select the problem statement according to the event process and must develop their solution within the allotted time.</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- TEAM REQUIREMENTS -->
+<section id="team">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Before you register</p>
+      <h2 class="section-title">Team Requirements</h2>
+    </div>
+ 
+    <div class="team-cards reveal">
+      <div class="team-card">
+        <div class="n">3</div>
+        <div class="label">MEMBERS</div>
+        <div class="total">₹750 Total</div>
+      </div>
+      <div class="team-card">
+        <div class="n">4</div>
+        <div class="label">MEMBERS</div>
+        <div class="total">₹1,000 Total</div>
+      </div>
+    </div>
+ 
+    <div class="warning-strip reveal">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+      <p><strong>Cross-college teams are not permitted.</strong> Only eligible students from same College may participate. Mixed teams consisting of students from other colleges are not allowed.</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- WHAT TO BRING -->
+<section id="bring">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Come prepared</p>
+      <h2 class="section-title">What to Bring</h2>
+    </div>
+ 
+    <div class="bring-hero reveal">
+      <div class="bring-icon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="12" rx="1"/><path d="M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M3 12h18"/></svg>
+      </div>
+      <div>
+        <h3>Junction Box — Mandatory</h3>
+        <p>Every team must bring their own Junction Box.</p>
+      </div>
+    </div>
+ 
+    <p class="section-lead reveal" style="margin-bottom:0;">Participants should also bring the permitted components, tools, laptops, software and other resources required for developing their prototype, as applicable.</p>
+  </div>
+</section>
+ 
+<!-- TERMS -->
+<section id="terms">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Please review</p>
+      <h2 class="section-title">Terms &amp; Conditions</h2>
+    </div>
+ 
+    <ul class="terms-list reveal">
+      <li>Registration information must be accurate.</li>
+      <li>Only eligible for same College students can participate.</li>
+      <li>Cross-college participation is not allowed.</li>
+      <li>Team size must be between 3 and 4 members.</li>
+      <li>Registration fee is ₹250 per person.</li>
+      <li>Participants must follow the official event schedule.</li>
+      <li>Teams must bring their own Junction Box.</li>
+      <li>Participants are responsible for their own permitted equipment and materials.</li>
+      <li>Teams must complete their prototype within the allotted time.</li>
+      <li>Teams must participate in the final demonstration and judging.</li>
+      <li>Plagiarism or unfair practices can lead to disqualification.</li>
+      <li>Participants must follow instructions from coordinators and judges.</li>
+      <li>Judges' decisions will be final.</li>
+      <li>The organizers may modify event procedures when necessary.</li>
+      <li>By registering, participants agree to the event rules and Terms &amp; Conditions.</li>
+    </ul>
+ 
+    <div class="agree-row reveal">
+      <input type="checkbox" id="agreeTerms">
+      <label for="agreeTerms">I have read and agree to the Terms &amp; Conditions.</label>
+    </div>
+  </div>
+</section>
+ 
+<!-- REGISTER -->
+<section id="register">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Last step</p>
+      <h2 class="section-title">Register for INNOVATHON 2K26</h2>
+      <p class="section-lead">Ready to Think. Build. Pitch. Win?</p>
+    </div>
+ 
+    <div class="register-panel reveal">
+      <div class="register-facts">
+        <div class="fact-chip"><span class="dot"></span> October 15, 2026</div>
+        <div class="fact-chip"><span class="dot"></span> 9:30 AM – 3:30 PM</div>
+        <div class="fact-chip accent"><span class="dot"></span> ₹250 / Person</div>
+        <div class="fact-chip accent"><span class="dot"></span> Team Size: 3–4 Members</div>
+      </div>
+ 
+      <h3 style="margin-top:36px;font-size:18px;">How to Register</h3>
+      <div class="steps-list" style="margin-top:20px;">
+        <div class="step-item"><div class="step-num">1</div><div><strong>Read the details</strong><p>Go through the event details and rules above.</p></div></div>
+        <div class="step-item"><div class="step-num">2</div><div><strong>Form your team</strong><p>3–4 students.</p></div></div>
+        <div class="step-item"><div class="step-num">3</div><div><strong>Keep the fee ready</strong><p>₹250 for each participant.</p></div></div>
+        <div class="step-item"><div class="step-num">4</div><div><strong>Click Register Now</strong><p>Scroll down to the official form below.</p></div></div>
+        <div class="step-item"><div class="step-num">5</div><div><strong>Complete the Google Form</strong><p>Fill in all required participant details.</p></div></div>
+        <div class="step-item"><div class="step-num">6</div><div><strong>Follow payment instructions</strong><p>As provided within the Google Form.</p></div></div>
+        <div class="step-item"><div class="step-num">7</div><div><strong>Submit</strong><p>Complete your registration successfully.</p></div></div>
+      </div>
+ 
+      <p class="reminder-note">Please make sure all participant details are entered correctly before submitting the form.</p>
+ 
+      <div class="form-open-row" style="margin-bottom:0;">
+        <a class="btn btn-primary" id="openFormTop" href="https://docs.google.com/forms/d/e/1FAIpQLSe1hfnAI6SDPmRB4XA7e56ypjWeLcq0YZvztjoA1GFNuyyvbQ/viewform" target="_blank" rel="noopener noreferrer">Open Official Registration Form ↗</a>
+      </div>
+ 
+      <p class="fallback-note">This opens the official Google Form in a new tab. Complete your registration there.</p>
+ 
+      <p class="payment-note">Registration fee: <strong style="color:var(--ink)">₹250 per person</strong> — a 3-member team pays ₹750, a 4-member team pays ₹1,000. If the official Google Form contains payment instructions, please follow those instructions directly.</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Common questions</p>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="accordion reveal" id="faqAccordion"></div>
+  </div>
+</section>
+ 
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Get in touch</p>
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-lead">INNOVATHON 2K26 · Mahendra Engineering College · Department of Electrical and Electronics Engineering</p>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <div class="label">VENUE</div>
+        <div class="val">MG AUDITORIUM</div>
+      </div>
+      <div class="contact-card">
+        <div class="label">CONTACT NUMBER</div>
+        <div class="val">6380161093</div>
+        <div class="val">6383157156</div>
+      </div>
+      <div class="contact-card">
+        <div class="label">STUDENT COORDINATOR</div>
+        <div class="val">DHILIPAN M.R / III-EEE</div>
+        <div class="val">SANJAY R / III-EEE</div>
+        <div class="val">MEGADEEPA T / III-EEE</div>
+        <div class="val">KAVIN B / III-EEE</div>
+        <div class="val">PRASANNA K / III-EEE</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="container">
+    <p class="eyebrow" style="justify-content:center;">Ready to innovate?</p>
+    <div class="final-words">
+      <span class="think">Think.</span><span class="build">Build.</span><span class="pitch">Pitch.</span><span class="win">Win.</span>
+    </div>
+    <div class="final-facts">
+      <div class="fact-chip"><span class="dot"></span> October 15, 2026</div>
+      <div class="fact-chip accent"><span class="dot"></span> ₹250 / Person</div>
+      <div class="fact-chip accent"><span class="dot"></span> Team Size: 3–4 Members</div>
+    </div>
+    <a href="#register" class="btn btn-primary">Register Now</a>
+  </div>
+</section>
+ 
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <centre>
+        <div class="brand"><span class="brand-mark">2K26</span><span>INNOVATHON 2K26</span></div>
+        <p style="margin-top:14px;">Mahendra Engineering College<br>Department of Electrical and Electronics Engineering</p>
+        <p class="footer-tag">"Think. Build. Pitch. Win."</p>
+        </centre>
+      </div>
+      
+    <div class="footer-bottom">
+      © 2026 Mahendra Engineering College — Department of Electrical and Electronics Engineering
+    </div>
+  </div>
+</footer>
+ 
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+ 
+<script>
+// ---------- Mobile nav toggle ----------
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+ 
+function closeMobileNav() {
+  if (!navToggle || !navLinks) return;
+  navLinks.classList.remove('open');
+  navToggle.classList.remove('is-open');
+  navToggle.setAttribute('aria-expanded', 'false');
+}
+ 
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.classList.toggle('is-open', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+}
+ 
+// ---------- Reliable in-page smooth scrolling ----------
+// Handles every same-page "#" link on the site (nav, hero, final CTA,
+// footer). Computes the offset itself so the sticky nav never covers
+// the destination heading, and works even if CSS scroll-margin-top
+// isn't honoured by the browser.
+function getNavHeight() {
+  const nav = document.querySelector('.nav');
+  return nav ? nav.offsetHeight : 70;
+}
+ 
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href');
+    if (!href || href === '#') return;
+    const target = document.querySelector(href);
+    if (!target) return; // not an in-page anchor we manage
+ 
+    e.preventDefault();
+    closeMobileNav();
+ 
+    const top = target.getBoundingClientRect().top + window.pageYOffset - (getNavHeight() - 2);
+    window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+ 
+    // Keep the URL shareable without re-triggering default jump behaviour.
+    if (history.pushState) {
+      history.pushState(null, '', href);
+    }
+  });
+});
+ 
+// ---------- Chevron icon (shared) ----------
+const chevronSVG = '<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+ 
+// ---------- Build an accordion into a container ----------
+function buildAccordion(container, items) {
+  items.forEach((item, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'accordion-item';
+ 
+    const trigger = document.createElement('button');
+    trigger.className = 'accordion-trigger';
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.innerHTML =
+      '<span class="num">' + item.num + '</span>' +
+      '<span>' + item.title + '</span>' + chevronSVG;
+ 
+    const panel = document.createElement('div');
+    panel.className = 'accordion-panel';
+    const panelInner = document.createElement('div');
+    panelInner.className = 'accordion-panel-inner';
+    panelInner.textContent = item.body;
+    panel.appendChild(panelInner);
+ 
+    trigger.addEventListener('click', () => {
+      const isOpen = wrap.classList.contains('open');
+      // close siblings
+      container.querySelectorAll('.accordion-item.open').forEach(openItem => {
+        if (openItem !== wrap) {
+          openItem.classList.remove('open');
+          openItem.querySelector('.accordion-panel').style.maxHeight = null;
+          openItem.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+        }
+      });
+      if (isOpen) {
+        wrap.classList.remove('open');
+        panel.style.maxHeight = null;
+        trigger.setAttribute('aria-expanded', 'false');
+      } else {
+        wrap.classList.add('open');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+ 
+    wrap.appendChild(trigger);
+    wrap.appendChild(panel);
+    container.appendChild(wrap);
+  });
+}
+ 
+// ---------- Rules data ----------
+const rules = [
+  "Only eligible students from same College can participate.",
+  "Cross-college participation is NOT permitted.",
+  "Each team must contain a minimum of 3 members and a maximum of 4 members.",
+  "The registration fee is ₹250 per person.",
+  "A 3-member team will pay ₹750 in total.",
+  "A 4-member team will pay ₹1,000 in total.",
+  "Each team must bring their own Junction Box.",
+  "Participants must provide correct and valid information during registration.",
+  "The problem statement will be provided/selected according to the event process.",
+  "Teams must develop their idea and prototype within the allotted event schedule.",
+  "Teams must submit their idea according to the instructions given during the event.",
+  "Teams must complete final testing and preparation within the allotted time.",
+  "Teams must present and demonstrate their prototype during the judging session.",
+  "Plagiarism, copying, cheating, impersonation or any unfair practice may result in disqualification.",
+  "Each team must present its own work and idea.",
+  "Participants must follow the instructions of the event coordinators and judges.",
+  "Participants must maintain discipline and professional conduct throughout the event.",
+  "Participants are responsible for the safe handling of their own equipment, tools and prototype.",
+  "The decision of the judges regarding evaluation and results will be final.",
+  "The organizers reserve the right to modify the event schedule or rules if required."
+];
+ 
+const rulesContainer = document.getElementById('rulesAccordion');
+if (rulesContainer) {
+  buildAccordion(rulesContainer, rules.map((body, i) => ({
+    num: String(i + 1).padStart(2, '0'),
+    title: 'Rule ' + String(i + 1).padStart(2, '0'),
+    body: body
+  })));
+}
+ 
+// ---------- FAQ data ----------
+const faqs = [
+  ["What is INNOVATHON 2K26?", "INNOVATHON 2K26 is an innovation challenge where participants identify a problem, develop an innovative solution, build a prototype and present it to judges."],
+  ["When is the event?", "October 15, 2026."],
+  ["What is the event timing?", "9:30 AM to 3:30 PM."],
+  ["Who can participate?", "Eligible students from same College."],
+  ["Can students from other colleges participate?", "No. Cross-college participation is not permitted."],
+  ["How many members are allowed in a team?", "Minimum 3 members and maximum 4 members."],
+  ["What is the registration fee?", "₹250 per person."],
+  ["How much does a 3-member team pay?", "₹750 total."],
+  ["How much does a 4-member team pay?", "₹1,000 total."],
+  ["What should each team bring?", "Every team must bring their own Junction Box and any other permitted resources required for their prototype."],
+  ["When will the problem statement be given?", "The problem statement and idea submission session is from 10:00 AM to 10:30 AM."],
+  ["How long is prototype development?", "Prototype development is scheduled from 10:30 AM to 1:00 PM."],
+  ["When is judging?", "Prototype Demo & Judging is from 2:15 PM to 2:50 PM."],
+  ["How do I register?", "Click Register Now and complete the official Google Form."]
+];
+ 
+const faqContainer = document.getElementById('faqAccordion');
+if (faqContainer) {
+  buildAccordion(faqContainer, faqs.map((pair, i) => ({
+    num: 'Q' + (i + 1),
+    title: pair[0],
+    body: pair[1]
+  })));
+}
+ 
+// ---------- Scroll reveal ----------
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+} else {
+  revealEls.forEach(el => el.classList.add('in'));
+}
+ 
+// ---------- Back to top ----------
+const toTop = document.getElementById('toTop');
+if (toTop) {
+  window.addEventListener('scroll', () => {
+    toTop.classList.toggle('show', window.scrollY > 600);
+  });
+  toTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+ 
+</script>
+</body>
+</html>
